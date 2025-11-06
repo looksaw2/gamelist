@@ -1,3 +1,4 @@
+using ASPNETDemo1.Authorization;
 using ASPNETDemo1.Entities;
 using ASPNETDemo1.Repository;
 using FluentValidation;
@@ -5,7 +6,7 @@ using FluentValidation.Results;
 
 namespace ASPNETDemo1.Endpoints;
 
-public static class GameEndPonts
+public static class GameEndPoints
 {
     public const string GetGameEndpoint = "GetGame";
     public static RouteGroupBuilder MapGameEndpoints(this IEndpointRouteBuilder routes)
@@ -14,15 +15,18 @@ public static class GameEndPonts
         group.MapGet("/", async (IGameRepository repository) => 
             (await repository.GetAllGamesAsync()).Select(game => game.AsDto())
             );
-        group.MapGet("/{id}", async (IGameRepository repository,int id) =>
-        {
-            Game? game = await repository.GetGameByIdAsync(id);
-            if (game is null)
+        group.MapGet("/{id}", async (IGameRepository repository, int id) =>
             {
-                return Results.NotFound();
-            }
-            return Results.Ok(game.AsDto());
-        }).WithName(GetGameEndpoint);
+                Game? game = await repository.GetGameByIdAsync(id);
+                if (game is null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(game.AsDto());
+            }).WithName(GetGameEndpoint)
+            .RequireAuthorization(Policies.ReadAccess
+        );
 
         group.MapPost("/", async (IGameRepository repository,CreateGameDto gamedto , IValidator<Game> validator) =>
         {
@@ -41,7 +45,7 @@ public static class GameEndPonts
             }
             await repository.CreateAsync(game);
             return Results.CreatedAtRoute(GetGameEndpoint,new { id = game.Id} , game);
-        });
+        }).RequireAuthorization(Policies.WriteAccess);
 
 
         group.MapPut("/{id}", async (IGameRepository repository,int id, UpdateGameDto updatedGameDto, IValidator<Game> validator) =>
@@ -72,7 +76,7 @@ public static class GameEndPonts
             existingGame.ImageUri = updatedGame.ImageUri;
             await repository.UpdateAsync(existingGame);
             return Results.NoContent();
-        });
+        }).RequireAuthorization(Policies.WriteAccess);
 
 
         group.MapDelete("/{id}", async (IGameRepository repository,int id) =>
@@ -84,7 +88,7 @@ public static class GameEndPonts
             }
 
             return Results.NoContent();
-        });
+        }).RequireAuthorization(Policies.WriteAccess);
         return group;
     }
 }

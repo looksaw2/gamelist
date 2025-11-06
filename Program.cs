@@ -1,3 +1,4 @@
+using ASPNETDemo1.Authorization;
 using ASPNETDemo1.Data;
 using ASPNETDemo1.Endpoints;
 using ASPNETDemo1.Entities;
@@ -12,6 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRepository(builder.Configuration);
 //store in user-secret
 
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddGameStoreAuthorization();
+builder.Logging.AddJsonConsole(options =>
+{
+    options.JsonWriterOptions = new()
+    {
+        Indented = true
+    };
+});
 
 builder.Services.AddValidatorsFromAssemblyContaining<GameValidator>();
 

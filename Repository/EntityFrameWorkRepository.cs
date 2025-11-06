@@ -8,9 +8,16 @@ public class EntityFrameWorkRepository : IGameRepository
 {
     private readonly GameStoreContext dbContext;
 
-    public EntityFrameWorkRepository(GameStoreContext dbContext)
+    private readonly ILogger<EntityFrameWorkRepository> logger;
+    
+
+    public EntityFrameWorkRepository(
+        GameStoreContext dbContext,
+        ILogger<EntityFrameWorkRepository> logger
+        )
     {
         this.dbContext = dbContext;
+        this.logger = logger;
     }
     public async Task<IEnumerable<Game>> GetAllGamesAsync()
     {
@@ -26,6 +33,7 @@ public class EntityFrameWorkRepository : IGameRepository
     {
         dbContext.Games.Add(game);
         dbContext.SaveChangesAsync();
+        logger.LogInformation("Game {Name} with price {Price} has been created",game.Name,game.Price);
     }
 
     public async Task UpdateAsync(Game updateGame)

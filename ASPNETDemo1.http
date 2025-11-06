@@ -9,6 +9,7 @@ GET {{ASPNETDemo1_HostAddress}}/games
 ###
 
 GET {{ASPNETDemo1_HostAddress}}/games/1
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imxvb2tzYXciLCJzdWIiOiJsb29rc2F3IiwianRpIjoiODY5ZTg0YzkiLCJyb2xlIjoiQWRtaW4iLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo1MDU4IiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzI0NiJdLCJuYmYiOjE3NjI0MjkwMDgsImV4cCI6MTc3MDM3NzgwOCwiaWF0IjoxNzYyNDI5MDA4LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.Rc_tZRWWVfoujuxwgtnsZGO95gOnwNBTAP58Ua-6x_I
 ###
 
 POST {{ASPNETDemo1_HostAddress}}/games
@@ -20,4 +21,18 @@ Content-Type: application/json
   "Price" : 20.0,
   "ReleaseDate": "2002-02-03",
   "ImageUrl" : "https://placehold.co/100" 
+}
+
+###
+
+POST {{ASPNETDemo1_HostAddress}}/games
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imxvb2tzYXciLCJzdWIiOiJsb29rc2F3IiwianRpIjoiMjBkM2RjZDIiLCJzY29wZSI6ImdhbWVzOndyaXRlIiwicm9sZSI6IkFkbWluIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NTA1OCIsImh0dHBzOi8vbG9jYWxob3N0OjcyNDYiXSwibmJmIjoxNzYyNDMyMjI1LCJleHAiOjE3NzAzODEwMjUsImlhdCI6MTc2MjQzMjIyNiwiaXNzIjoiZG90bmV0LXVzZXItand0cyJ9.FY1jR2PmHCuR4jQ2ahhtS6GGCrnk2YyrKZalvo5dfn8
+
+{
+  "Name" : "Dota2",
+  "Genre" : "MOBA Game",
+  "Price" : 19.9,
+  "ReleaseDate" : "2012-09-23",
+  "ImageUrl" : "https://placehold.co/100"
 }
