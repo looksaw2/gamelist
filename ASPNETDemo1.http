@@ -1,6 +1,23 @@
 @ASPNETDemo1_HostAddress = http://localhost:5058
 
-GET {{ASPNETDemo1_HostAddress}}/weatherforecast/
-Accept: application/json
+GET {{ASPNETDemo1_HostAddress}}/
 
 ###
+
+GET {{ASPNETDemo1_HostAddress}}/games
+
+###
+
+GET {{ASPNETDemo1_HostAddress}}/games/1
+###
+
+POST {{ASPNETDemo1_HostAddress}}/games
+Content-Type: application/json
+
+{
+  "Name" : "Silk song",
+  "Genre": "action",
+  "Price" : 20.0,
+  "ReleaseDate": "2002-02-03",
+  "ImageUrl" : "https://placehold.co/100" 
+}

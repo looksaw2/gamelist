@@ -1,0 +1,7 @@
+﻿services:
+  aspnetdemo1:
+    image: aspnetdemo1
+    build:
+      context: .
+      dockerfile: Dockerfile
+
