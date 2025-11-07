@@ -9,6 +9,7 @@
   </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Http" Version="8.0.0" />
         <PackageReference Include="EFCore.BulkExtensions.SqlServer" Version="9.0.0" />
         <PackageReference Include="FluentValidation" Version="12.1.0" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />

@@ -1,6 +1,6 @@
 namespace ASPNETDemo1;
 
-public record GameDto(
+public record GameDtoV1(
     int Id,
     string Name,
     string Genre,
@@ -9,6 +9,15 @@ public record GameDto(
     string ImageUrl
 );
 
+public record GameDtoV2(
+    int Id,
+    string Name,
+    string Genre,
+    decimal Price,
+    decimal RetailPrice,
+    DateTime ReleaseDate,
+    string ImageUrl
+);
 
 public record CreateGameDto(
     string Name,

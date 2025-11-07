@@ -1,7 +1,11 @@
+using System.Diagnostics;
 using ASPNETDemo1.Authorization;
+using ASPNETDemo1.Cors;
 using ASPNETDemo1.Data;
 using ASPNETDemo1.Endpoints;
 using ASPNETDemo1.Entities;
+using ASPNETDemo1.ErrorHandling;
+using ASPNETDemo1.Middlewares;
 using ASPNETDemo1.Repository;
 using FluentValidation;
 using FluentValidation.Results;
@@ -15,6 +19,11 @@ builder.Services.AddRepository(builder.Configuration);
 
 builder.Services.AddAuthentication().AddJwtBearer();
 builder.Services.AddGameStoreAuthorization();
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new(1.0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+});
 builder.Logging.AddJsonConsole(options =>
 {
     options.JsonWriterOptions = new()
@@ -25,9 +34,19 @@ builder.Logging.AddJsonConsole(options =>
 
 builder.Services.AddValidatorsFromAssemblyContaining<GameValidator>();
 
+builder.Services.AddGameStoreCors(builder.Configuration);
+
 var app = builder.Build();
 //Migrate database
 await app.Services.InitializeDb();
+
+
+app.UseExceptionHandler(exceptionHandlerApp => exceptionHandlerApp.ConfigureExceptionHandler());
+
+app.UseMiddleware<RequestTimingMiddleware>();
+app.UseHttpLogging();
+
+app.UseCors();
 
 app.MapGameEndpoints();
 
